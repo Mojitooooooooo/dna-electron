@@ -1,4 +1,5 @@
-const seedrandom = require('seedrandom')
+import { Random } from './random'
+const random = new Random()
 
 let gen_tau = (S, K, delta) => {
   let pivot = Math.floor(K / S)
@@ -93,9 +94,21 @@ export class PRNG {
       this.state = seed
 
     let blockseed = this.state
-    let rng = seedrandom(this.state)
-    let p = rng()
+    random.seed(this.state)
+    let d = this._sample_d()
 
-    
+    let nums = random.sample([...Array(this.K_int).keys()], d)
+
+    return {blockseed, d, nums}
+  }
+
+  _sample_d() {
+    let p = random.random()
+    let i
+    for(i = 0; i < this.cdf.length; i++) {
+      if(this.cdf[i] > p)
+        return i + 1
+    }
+    return i
   }
 }

@@ -20,7 +20,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1000,
+    width: 920,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -50,7 +50,7 @@ app.on('activate', () => {
 
 ipcMain.handle('file-choose', async (e) => {
   const file = await dialog.showOpenDialog({
-    properties: ['openFile']
+    properties: ['openFile', 'multiSelections']
   })
   return file
 })
