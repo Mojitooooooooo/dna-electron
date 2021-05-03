@@ -1,7 +1,7 @@
 import { PRNG } from './robust_solition'
 import { Encoder, Decoder } from './lib/index'
 import { Droplet } from './Droplet'
-import { XOR, dna_to_int_array } from './util'
+import { XOR, dna_to_int_array, getAllFileType } from './util'
 
 
 export class Glass {
@@ -120,6 +120,9 @@ export class Glass {
 
   getString() {
     let totalLength = this.chunks.length * this.chunks[0].length
-    return Buffer.concat(this.chunks, totalLength)
+    let buf = this.chunks[0].slice(0, 5).toString('hex')
+    let suffix = getAllFileType(buf)
+    let totalBuf = Buffer.concat(this.chunks, totalLength)
+    return {totalBuf, suffix}
   }
 }

@@ -158,50 +158,6 @@ export default {
   },
   created() {
     window.infos = this.infos;
-    let a = Buffer.from([
-      137,
-      80,
-      78,
-      71,
-      13,
-      10,
-      26,
-      10,
-      0,
-      0,
-      0,
-      13,
-      73,
-      72,
-      68,
-      82,
-      0,
-      0,
-      1,
-      0,
-      0,
-      0,
-      1,
-      0,
-      8,
-      6,
-      0,
-      0,
-      0,
-      92,
-      114,
-      168,
-    ]);
-    let b = new Encoder(2).encode(a);
-
-    console.log(b)
-    let data_corrected = new Decoder(2).correct(b)
-    data_corrected = data_corrected.slice(0, data_corrected.length - 2)
-    console.log(data_corrected)
-    let seed_array = data_corrected.slice(0, 4)
-    console.log(seed_array)
-    let payload = data_corrected.slice(4)
-    console.log(payload)
   },
   methods: {
     async chooseFile() {
@@ -222,7 +178,7 @@ export default {
       this.fileList.push(...fileReading);
     },
     openFile(file) {
-      shell.showItemInFolder(path.resolve(`${file.name}.out.dna`));
+      shell.openPath(file.outName)
     },
     deleteFile(index) {
       this.fileList.splice(index, 1);
@@ -293,9 +249,11 @@ export default {
         }
       }
 
-      let outstring = g.getString()
-      let fd = fs.openFile(`./${file.name}.out.bin`, 'wb')
-      fs.write(fd, outstring)
+      let {totalBuf, suffix} = g.getString()
+      file.outName = `${file.name}.${suffix}`
+      fs.writeFile(`./${file.name}.${suffix}`, totalBuf, () => {
+        
+      })
     },
   },
 };

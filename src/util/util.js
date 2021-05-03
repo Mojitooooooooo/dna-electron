@@ -12,6 +12,63 @@ let revtab = {
   'T': '3'
 }
 
+let file_type_map = {
+  "ffd8ffe000104a464946": "jpg",
+  "89504e470d0a1a0a0000": "png",
+  "47494638396126026f01": "gif",
+  "49492a00227105008037": "tif",
+  "424d228c010000000000": "bmp",
+  "424d8240090000000000": "bmp",
+  "424d8e1b030000000000": "bmp",
+  "41433130313500000000": "dwg",
+  "3c21444f435459504520": "html",
+  "3c21646f637479706520": "htm",
+  "48544d4c207b0d0a0942": "css",
+  "696b2e71623d696b2e71": "js",
+  "7b5c727466315c616e73": "rtf",
+  "38425053000100000000": "psd",
+  "46726f6d3a203d3f6762": "eml",
+  "d0cf11e0a1b11ae10000": "wps",
+  "5374616E64617264204A": "mdb",
+  "252150532D41646F6265": "ps",
+  "255044462d312e360d25": "pdf",
+  "2e524d46000000120001": "rmvb",
+  "464c5601050000000900": "flv",
+  "00000020667479706973": "mp4",
+  "49443303000000000f76": "mp3",
+  "000001ba210001000180": "mpg",
+  "3026b2758e66cf11a6d9": "wmv",
+  "524946464694c9015741": "wav",
+  "52494646d07d60074156": "avi",
+  "4d546864000000060001": "mid",
+  "504b0304140000000800": "zip",
+  "526172211a0700cf9073": "rar",
+  "235468697320636f6e66": "ini",
+  "504b03040a0000000000": "jar",
+  "4d5a9000030000000400": "exe",
+  "3c25402070616765206c": "jsp",
+  "4d616e69666573742d56": "mf",
+  "3c3f786d6c2076657273": "xml",
+  "efbbbf2f2a0d0a53514c": "sql",
+  "7061636b616765207765": "java",
+  "406563686f206f66660d": "bat",
+  "1f8b0800000000000000": "gz",
+  "6c6f67346a2e726f6f74": "properties",
+  "cafebabe0000002e0041": "class",
+  "49545346030000006000": "chm",
+  "04000000010000001300": "mxp",
+  "504b0304140006000800": "docx",
+  "6431303a637265617465": "torrent",
+  "494d4b48010100000200": "264",
+  "6D6F6F76": "mov",
+  "FF575043": "wpd",
+  "CFAD12FEC5FD746F": "dbx",
+  "2142444E": "pst",
+  "AC9EBD8F": "qdf",
+  "E3828596": "pwl",
+  "2E7261FD": "ram"
+}
+
 export let screen_repeat = (drop, max_repeat, gc_dev) => {
   let dna = drop.toDNA()
   return screen_repeat_dna(dna, max_repeat, gc_dev)
@@ -87,7 +144,12 @@ export let dna_to_int_array = (dna_str) => {
 }
 
 export let XOR = (data, chunk) => {
-  return data.map((index, el) => {
+  return data.map((el, index) => {
     return el ^ chunk[index]
   })
+}
+
+export let getAllFileType = (key) => {
+  let fileType = Object.keys(file_type_map).filter(i => i.indexOf(key) == 0)
+  return file_type_map[fileType[0]] || ''
 }
